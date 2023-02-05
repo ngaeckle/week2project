@@ -25,27 +25,34 @@ class Parking_garage():
              paid_amount += int(input("You didnt pay enough, please pay more: "))
         change = paid_amount - self.price
         print("Your ticket has been paid and you have 15 minutes to leave")
-        print(f"Your change is ${change}")
+        if change > 0:
+            print(f"Your change is ${change}")
         self.current_ticket['paid'] = True
 
     def leaveGarage(self):
 
         if self.current_ticket['paid']:
-            #leave
             print("Thank you have a nice day!")
-            self.capacity += 1
-            
-        else:
-            #need to pay
+            self.capacity += 1            
+        else:           
             Parking_garage.payForParking(self)
         pass
+
+    def findParking(self):
+       
+        while True:
+            user_choice = input("Would you like to park? ").lower()
+            if user_choice == 'yes' or 'y':
+                self.takeTicket()
+            if self.current_ticket['paid'] == False:
+                self.payForParking()
+                self.leaveGarage()
+            else:
+                self.leaveGarage()
+        
+
 
 
 park1 = Parking_garage(50, 5)
 
-park1.takeTicket()
-park1.leaveGarage()
-
-
-
-
+park1.findParking()
